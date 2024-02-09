@@ -36,6 +36,7 @@
         <github.slug>okta/okta-spring-boot</github.slug>
         <okta.sdk.version>8.2.5</okta.sdk.version>
         <okta.commons.version>1.3.5</okta.commons.version>
+        <versions.java-security-toolkit>1.1.2</versions.java-security-toolkit>
     </properties>
 
     <modules>
@@ -197,6 +198,12 @@
                 <artifactId>logback-core</artifactId>
                 <version>1.4.14</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.github.pixee</groupId>
+                <artifactId>java-security-toolkit</artifactId>
+                
+                <version>${versions.java-security-toolkit}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

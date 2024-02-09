@@ -16,6 +16,8 @@
 package com.okta.spring.boot.oauth;
 
 import com.okta.commons.lang.Strings;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -119,7 +121,7 @@ final class TokenUtil {
      * @return true if root/org, false otherwise
      */
     static boolean isRootOrgIssuer(String issuerUri) throws MalformedURLException {
-        String uriPath = new URL(issuerUri).getPath();
+        String uriPath = Urls.create(issuerUri, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).getPath();
 
         if (Strings.hasText(uriPath)) {
             String[] tokenizedUri = uriPath.substring(uriPath.indexOf("/")+1).split("/");

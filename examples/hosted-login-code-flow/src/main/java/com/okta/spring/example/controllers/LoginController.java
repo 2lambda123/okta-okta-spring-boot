@@ -16,6 +16,8 @@
 package com.okta.spring.example.controllers;
 
 import com.okta.spring.boot.oauth.config.OktaOAuth2Properties;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +47,7 @@ public class LoginController {
 
         String issuer = oktaOAuth2Properties.getIssuer();
         // the widget needs the base url, just grab the root of the issuer
-        String orgUrl = new URL(new URL(issuer), "/").toString();
+        String orgUrl = Urls.create(Urls.create(issuer, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString();
 
         ModelAndView mav = new ModelAndView("okta/login");
         mav.addObject(STATE, state);
