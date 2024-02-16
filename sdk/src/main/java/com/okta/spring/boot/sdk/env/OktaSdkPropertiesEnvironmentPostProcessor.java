@@ -15,6 +15,8 @@
  */
 package com.okta.spring.boot.sdk.env;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.boot.env.YamlPropertySourceLoader;
@@ -60,7 +62,7 @@ final class OktaSdkPropertiesEnvironmentPostProcessor implements EnvironmentPost
             if (StringUtils.hasText(issuerValue)) {
                 Map<String, Object> map = new HashMap<>();
                 try {
-                    map.put(OKTA_CLIENT_ORG_URL, new URL(new URL(issuerValue), "/").toString());
+                    map.put(OKTA_CLIENT_ORG_URL, Urls.create(Urls.create(issuerValue, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS), "/", Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS).toString());
                 } catch (MalformedURLException e) {
                     throw new RuntimeException(e);
                 }
